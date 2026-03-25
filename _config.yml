@@ -28,6 +28,7 @@ url: "https://choe-hyunho.github.io" # the base hostname & protocol for your sit
 
 twitter_username:
 github_username: choe-hyunho
+google_analytics: G-0WPRZH378V
 
 # Build settings
 markdown: kramdown
