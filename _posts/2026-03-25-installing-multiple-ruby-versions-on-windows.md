@@ -38,7 +38,7 @@ Lots of Ruby versions can be found in winget repository, as follows.
 
 Because [jekyll](https://jekyllrb.com/) requires C extension build, I need MSYS2-included versions.
 
-*[NOTE] Maybe I can share MSYS2 between Ruby versions, and MSYS2 can be independantly installed with winget, just installing Ruby may be enough. But a lot of files includeing C headers, libraries, etc. are used for building C extension, and they should be shared across Ruby versions, it is very hard to maintain proper build environment all across versions.*
+*[NOTE] Maybe I can share MSYS2 between Ruby versions, and MSYS2 can be independently installed with winget, just installing Ruby may be enough. But a lot of files including C headers, libraries, etc. are used for building C extension, and they should be shared across Ruby versions, it is very hard to maintain proper build environment all across versions.*
 
 I installed two versions as following commands:
 
@@ -51,11 +51,11 @@ At the final stage of installation, MSYS2 & MinGW toolchain install will be done
 
 <span style="color:red">**[NB] Don't select option 2 to update MSYS2 system during Ruby 3.1 install. It will update toolchains and may cause build failure in jekyll install.**</span>
 
-Even if I omit adding PATH variable, I can still access each version of ruby executable in "Ruby Command Prompt". If more sofisticate configuration is required, you may need to use proper "Ruby Manager" like [rbenv](https://github.com/RubyMetric/rbenv-for-windows), [RVM](https://github.com/magynhard/rvm-windows#readme), or [uru](https://bitbucket.org/jonforums/uru).
+Even if I omit adding PATH variable, I can still access each version of ruby executable in "Ruby Command Prompt". If more sophisticate configuration is required, you may need to use proper "Ruby Manager" like [rbenv](https://github.com/RubyMetric/rbenv-for-windows), [RVM](https://github.com/magynhard/rvm-windows#readme), or [uru](https://bitbucket.org/jonforums/uru).
 
 ## Install bundler & jekyll
 
-Now installing `bundler` and `jekyll` for each ruby version. Normally the following commands are OK for latest Ruby, but I tried to stick `jekyll` version matched to GitHub. **Start "Ruby Command Prompt" in administative privilege** and use the below commands.
+Now installing `bundler` and `jekyll` for each ruby version. Normally the following commands are OK for latest Ruby, but I tried to stick `jekyll` version matched to GitHub. **Start "Ruby Command Prompt" in administrative privilege** and use the below commands.
 
     gem install bundler
     gem install jekyll
@@ -65,13 +65,13 @@ For Ruby 3.1,
     gem install bundler
     gem install jekyll -v 3.10.0
 
-***[NOTE] If not using priviledge console, package executables will be installed in `C:\Users\username\AppData\Local\Microsoft\WindowsApps` folder. This is not preferable when installing multiple version of Ruby together. In the other hand, if you install packages in admin mode, executables will be installed on each ruby version installation directory.***
+***[NOTE] If not using privileged console, package executables will be installed in `C:\Users\username\AppData\Local\Microsoft\WindowsApps` folder. This is not preferable when installing multiple version of Ruby together. In the other hand, if you install packages in admin mode, executables will be installed on each ruby version installation directory.***
 
 OK, now I am ready for creating new jekyll site.
 
 ## Create & Build new jekyll pages
 
-Now I can make a new empty folder for jekyll site, or move to checkouted github folder to create and build pages.
+Now I can make a new empty folder for jekyll site, or move to cloned github folder to create and build pages.
 
 In privileged "Ruby Console", To create jekyll site(`--force` option may be needed if folder already has files inside.):
 
