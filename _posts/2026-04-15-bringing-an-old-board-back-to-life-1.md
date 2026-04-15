@@ -1,7 +1,7 @@
 ---
 layout: post
 title:  "Bringing an old board back to life - 1"
-date:   2026-04-15 11:05:07
+date:   2026-04-15 12:53:58 +0900
 categories: embedded system
 comments: true
 ---
