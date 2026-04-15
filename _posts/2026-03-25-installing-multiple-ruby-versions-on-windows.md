@@ -38,7 +38,8 @@ Lots of Ruby versions can be found in winget repository, as follows.
 
 Because [jekyll](https://jekyllrb.com/) requires C extension build, I need MSYS2-included versions.
 
-*[NOTE] Maybe I can share MSYS2 between Ruby versions, and MSYS2 can be independently installed with winget, just installing Ruby may be enough. But a lot of files including C headers, libraries, etc. are used for building C extension, and they should be shared across Ruby versions, it is very hard to maintain proper build environment all across versions.*
+> [!NOTE]
+> Maybe I can share MSYS2 between Ruby versions, and MSYS2 can be independently installed with winget, just installing Ruby may be enough. But a lot of files including C headers, libraries, etc. are used for building C extension, and they should be shared across Ruby versions, it is very hard to maintain proper build environment all across versions.
 
 I installed two versions as following commands:
 
@@ -49,7 +50,8 @@ Normally, winget installs applications in silent mode, and no user interaction i
 
 At the final stage of installation, MSYS2 & MinGW toolchain install will be done, which can be done in command line by `ridk install`. Select default option (`1,3`) to install MSYS2 base systems & MinGW toolchains.
 
-<span style="color:red">**[NB] Don't select option 2 to update MSYS2 system during Ruby 3.1 install. It will update toolchains and may cause build failure in jekyll install.**</span>
+> [!CAUTION]
+> Don't select option 2 to update MSYS2 system during Ruby 3.1 install. It will update toolchains and may cause build failure in jekyll install.
 
 Even if I omit adding PATH variable, I can still access each version of ruby executable in "Ruby Command Prompt". If more sophisticate configuration is required, you may need to use proper "Ruby Manager" like [rbenv](https://github.com/RubyMetric/rbenv-for-windows), [RVM](https://github.com/magynhard/rvm-windows#readme), or [uru](https://bitbucket.org/jonforums/uru).
 
@@ -65,7 +67,8 @@ For Ruby 3.1,
     gem install bundler
     gem install jekyll -v 3.10.0
 
-***[NOTE] If not using privileged console, package executables will be installed in `C:\Users\username\AppData\Local\Microsoft\WindowsApps` folder. This is not preferable when installing multiple version of Ruby together. In the other hand, if you install packages in admin mode, executables will be installed on each ruby version installation directory.***
+> [!IMPORTANT]
+> If not using privileged console, package executables will be installed in `C:\Users\username\AppData\Local\Microsoft\WindowsApps` folder. This is not preferable when installing multiple version of Ruby together. In the other hand, if you install packages in admin mode, executables will be installed on each ruby version installation directory.
 
 OK, now I am ready for creating new jekyll site.
 
@@ -90,4 +93,5 @@ If want to test in "production" environment (Notice on no space between producti
 
     set JEKYLL_ENV=production&& bundle exec jekyll serve
 
-*[NOTE] I can do most of works in user-mode console, except `bundle install` command. But for the same reason for `gem` command, `bundle` command should be run in admin-mode to avoid binary version conflict.*
+> [!NOTE]
+> I can do most of works in user-mode console, except `bundle install` command. But for the same reason for `gem` command, `bundle` command should be run in admin-mode to avoid binary version conflict.
