@@ -51,15 +51,27 @@ Now, I have `rootfs.ubi` & `rootfs.ubifs`, and `zImage` with previous kernel bui
   0x000001800000-0x000003000000 : "S3C2410 flash partition 6" (24M)
   0x000003000000-0x000004000000 : "S3C2410 flash partition 7" (16M)
 ```
-I will use partition #2(mtd2) for kernel and partition #6(mtd6) for root filesystem. Write images with following commands.
+But, to use full capacity of NAND, we can define partions in kernel command line rather than modifying default partition table in code. The following commad line will use first 2MB for `u-boot`, next 6MB for `kernel`, and remains for `rootfs`.
+```
+mtdparts=NAND:2m(u-boot),6m(kernel),-(rootfs)
+```
+If this command line is properly parsed in kernel, the kernel message will be changed as follows.
+```
+3 cmdlinepart partitions found on MTD device NAND
+Creating 3 MTD partitions on "NAND":
+0x000000000000-0x000000200000 : "u-boot"
+0x000000200000-0x000000800000 : "kernel"
+0x000000800000-0x000004000000 : "rootfs"
+```
+So, write each binaries to proper location as follows.
 ```
 tftpboot 0x30000000 uImage
-nand erase 0x400000 0x400000
-nand write 0x30000000 0x400000 ${filesize}
+nand erase 0x200000 0x600000
+nand write 0x30000000 0x200000 ${filesize}
 
 tftpboot 0x30000000 rootfs.ubi
-nand erase 0x1800000 0x1800000
-nand write 0x30000000 0x1800000 ${filesize}
+nand erase 0x800000 0x3800000
+nand write 0x30000000 0x800000 ${filesize}
 ```
 Before loading images from network, I configured TFTP server[^5] to my PC, put proper files to service directory. and set up the below variables to U-Boot.
 ```
@@ -73,9 +85,10 @@ This is my configurations, and should be changed properly to match your network 
 
 Then, it's time to boot board to Linux! Run the below commands and let's see what happens.
 ```
-setenv bootargs console=ttySAC0,115200 ubi.mtd=6 root=ubi0:rootfs rootfstype=ubifs rw
-nand read 0x30000000 0x400000 0x400000
-bootm 0x30000000
+setenv mtdids nand0=NAND
+setenv mtdparts mtdparts=NAND:2m(u-boot),6m(kernel),-(rootfs)
+setenv bootargs console=ttySAC0,115200 ${mtdparts} ubi.mtd=2 root=ubi0:rootfs rootfstype=ubifs rw
+setenv bootcmd nand read 0x30000000 0x200000 0x600000\; bootm 0x30000000
 ```
 OK, good. It is booted to login prompt. Entering `root`, I can get shell prompt. I have listed `/bin`,`/sbin`,`/usr/bin`, and `/usr/sbin`. Wow, what a neat!!! There is only one binary, `busybox` exists, and all the others are symbolic links. I have clean Embedded Linux System in SMDK2410!
 
