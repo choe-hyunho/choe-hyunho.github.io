@@ -74,7 +74,7 @@ After finding proper device, the next step is quite straightforward, but tedious
 
 ```Javascript
 ...
-	device.addEventListener('gattserverdisconnected', onDisconnect);
+    device.addEventListener('gattserverdisconnected', onDisconnect);
     //Connecting to GATT Server...
     const server = await device.gatt.connect();
     //Getting Current Time Service...
@@ -107,7 +107,7 @@ After finding proper device, the next step is quite straightforward, but tedious
     //Writing Current Time...
     let now = new Date();
     let writeCurrentTimeCommand = new Uint8Array(10);
-	let offset = 0;
+    let offset = 0;
     writeCurrentTimeCommand[offset++] = now.getFullYear() & 0xFF;
     writeCurrentTimeCommand[offset++] = (now.getFullYear() >> 8) & 0xFF;
     writeCurrentTimeCommand[offset++] = now.getMonth();
@@ -151,9 +151,9 @@ Right after get GATT characteristic, can register notification for that characte
     //Getting Current Time Characteristic...
     currentTimeCharacteristic = await service.getCharacteristic("current_time");
     //Registering Indication for Current Time Characteristic...
-	await currentTimeCharacteristic.startNotifications();
+    await currentTimeCharacteristic.startNotifications();
     //Current Time Notification Started
-	currentTimeCharacteristic.addEventListener('characteristicvaluechanged', handleNotification);
+    currentTimeCharacteristic.addEventListener('characteristicvaluechanged', handleNotification);
 ...
 function handleNotification(event) {
   let value = event.target.value;
